@@ -1,10 +1,10 @@
 
 class CropBox {
     constructor(tlX, tlY, brX, brY) {
-        this.tlX = (!!tlX) ? parseInt(tlX) : null;
-        this.tlY = (!!tlY) ? parseInt(tlY) : null;
-        this.brX = (!!brX) ? parseInt(brX) : null;
-        this.brY = (!!brY) ? parseInt(brY) : null;
+        this.tlX = (tlX === "0" || !!tlX) ? parseInt(tlX) : null;
+        this.tlY = (tlY === "0" || !!tlY) ? parseInt(tlY) : null;
+        this.brX = (brX === "0" || !!brX) ? parseInt(brX) : null;
+        this.brY = (brY === "0" || !!brY) ? parseInt(brY) : null;
     }
 
     isComplete() {
