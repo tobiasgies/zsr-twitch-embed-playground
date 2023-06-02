@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+    <title>ZSR Playground using Twitch embedded player</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="croptool.js"></script>
+</head>
+<body>
+    <form id="crop-controls">
+        <label for="tl-x">Top left X:</label>
+        <input id="tl-x" type="number" min="0" max="1280">
+        <label for="tl-y">Top left Y:</label>
+        <input id="tl-y" type="number" min="0" max="720">
+        <label for="br-x">Bottom right X:</label>
+        <input id="br-x" type="number" min="0" max="1280">
+        <label for="br-y">Bottom right Y:</label>
+        <input id="br-y" type="number" min="0" max="720">
+        <button id="crop">Crop</button>
+        <button id="uncrop">Uncrop</button>
+    </form>
+    <div id="player-container">
+        <div id="player-mouse-capture"></div>
+        <div id="crop-highlight"></div>
+        <script src= "https://player.twitch.tv/js/embed/v1.js"></script>
+        <div id="twitch-player"></div>
+        <script type="text/javascript">
+            let options = {
+                width: 1280,
+                height: 720,
+                channel: "gamesdonequick",
+                parent: ["localhost", "node.zeldaspeedruns.com"],
+                autoplay: true,
+                muted: false
+            }
+            let player = new Twitch.Player("twitch-player", options);
+            player.addEventListener(Twitch.Player.CAPTIONS, it => console.log(`CAPTIONS: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.ENDED, it => console.log(`ENDED: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.PAUSE, it => console.log(`PAUSE: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.PLAY, it => console.log(`PLAY: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.PLAYBACK_BLOCKED, it => console.log(`PLAYBACK_BLOCKED: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.PLAYING, function(it) {
+                console.log(`PLAYING: ${JSON.stringify(it)}`);
+                player.setVolume(0.25);
+                player.setMuted(false);
+            });
+            player.addEventListener(Twitch.Player.OFFLINE, it => console.log(`OFFLINE: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.ONLINE, it => console.log(`ONLINE: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.SEEK, it => console.log(`SEEK: ${JSON.stringify(it)}`));
+            player.addEventListener(Twitch.Player.READY, it => console.log(`READY: ${JSON.stringify(it)}`));
+        </script>
+    </div>
+</body>
+</html>
